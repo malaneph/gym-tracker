@@ -11,11 +11,14 @@ class CreateUserAction
     {
     }
 
-    public function __invoke(array $attributes): void
+    public function __invoke(array $attributes): User|null
     {
         DB::transaction(function () use ($attributes) {
             $user = new User($attributes);
             $user->save();
+            return $user;
         });
+
+        return null;
     }
 }

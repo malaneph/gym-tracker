@@ -7,4 +7,8 @@ use SergiX44\Nutgram\Nutgram;
 
 Route::middleware(ValidateWebAppData::class)->post('/auth/init', [UserController::class, 'authUser']);
 
+Route::middleware(ValidateWebAppData::class)->controller(UserController::class)->group(function () {
+    Route::post('/settings', 'updateUserSettings')->name('settings.update');
+});
+
 Route::post('/bot/webhook', fn(Nutgram $bot) => $bot->run());
