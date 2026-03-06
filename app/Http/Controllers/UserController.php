@@ -8,6 +8,7 @@ use App\Http\Requests\AuthUserRequest;
 use App\Http\Requests\UserSettingsRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\Queries\GetUserQuery;
 
 class UserController extends Controller
 {
@@ -26,5 +27,12 @@ class UserController extends Controller
         $data = $request->validated();
 
         return UserResource::make($action($data));
+    }
+
+    public function show(GetUserQuery $query): UserResource
+    {
+        $user = new GetUserQuery();
+
+        return UserResource::make($user);
     }
 }
