@@ -11,24 +11,33 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->uuid();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->uuid()->primary();
+            $table->string('username');
+            $table->string('email')->unique()->nullable();
+            $table->string('avatar')->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create('users_credentials', function (Blueprint $table) {
+            $table->uuid()->primary();
+            $table->foreignUuid('user')->constrained('users');
+            $table->string('provider');
+            $table->string('provider_user_id');
+            $table->text('data_for_provider')->nullable();
+            $table->string('status');
             $table->timestamps();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
-            $table->string('email')->primary();
+            $table->id();
+            $table->foreignUuid('user')->constrained('users');
             $table->string('token');
             $table->timestamp('created_at')->nullable();
         });
 
         Schema::create('sessions', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->foreignId('user_id')->nullable()->index();
+            $table->foreignUuid('user')->nullable()->index();
             $table->string('ip_address', 45)->nullable();
             $table->text('user_agent')->nullable();
             $table->longText('payload');
@@ -42,6 +51,7 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::dropIfExists('users');
+        Schema::dropIfExists('users_credentials');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
     }
