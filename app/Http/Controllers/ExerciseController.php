@@ -3,15 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Actions\CreateExerciseAction;
+use App\Actions\DeleteExerciseAction;
 use App\Http\Requests\ExerciseRequest;
+use App\Http\Requests\SearchExerciseRequest;
 use App\Http\Resources\ExerciseResource;
 use App\Models\Exercise;
+use App\Queries\GetExerciseQuery;
 
 class ExerciseController extends Controller
 {
-    public function index()
+    public function index(GetExerciseQuery $query)
     {
-        return ExerciseResource::collection(Exercise::all());
+        $exercises = $query->builder()->paginate(10);
+
+        return ExerciseResource::collection($exercises);
+    }
+
+    public function search(SearchExerciseRequest $request, GetExerciseQuery $query)
+    {
+        $name = $request->validated('name');
+        $exercises = $query->search($name)->paginate(10);
+
+        return ExerciseResource::collection($exercises);
     }
 
     public function store(ExerciseRequest $request, CreateExerciseAction $action)
@@ -31,9 +44,9 @@ class ExerciseController extends Controller
         return new ExerciseResource($exercise);
     }
 
-    public function destroy(Exercise $exercise)
+    public function destroy(Exercise $exercise, DeleteExerciseAction $action)
     {
-        $exercise->delete();
+        $action($exercise);
 
         return response()->json();
     }

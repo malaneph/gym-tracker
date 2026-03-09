@@ -7,9 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class CreateExerciseAction
 {
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     public function __invoke(array $attributes): void
     {

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Nutgram\Laravel\Middleware\ValidateWebAppData;
@@ -12,3 +13,8 @@ Route::middleware(ValidateWebAppData::class)->controller(UserController::class)-
 });
 
 Route::post('/bot/webhook', fn(Nutgram $bot) => $bot->run());
+
+Route::controller(ExerciseController::class)->prefix('/exercises')->group(function () {
+    Route::get('/', 'index');
+    Route::get('/search', 'search');
+});
