@@ -4,9 +4,7 @@ namespace App\Services;
 
 class AuthService
 {
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     public static function checkInitData(array $init_data): bool
     {

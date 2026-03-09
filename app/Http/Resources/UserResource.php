@@ -12,7 +12,7 @@ class UserResource extends JsonResource
         return [
             'uuid' => $this->uuid,
             'username' => $this->username,
-            'settings' => JsonResource::make($this->settings)
+            'settings' => JsonResource::make($this->settings),
         ];
     }
 }

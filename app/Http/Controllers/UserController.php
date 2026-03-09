@@ -12,10 +12,10 @@ use App\Queries\GetUserQuery;
 
 class UserController extends Controller
 {
-    public function authUser(AuthUserRequest $request, CreateUserAction $action): UserResource|null
+    public function authUser(AuthUserRequest $request, CreateUserAction $action): ?UserResource
     {
         $user_data = $request->validated();
-        if (!$user = User::where('telegram_id', $user_data['telegram_id'])->first()) {
+        if (! $user = User::where('telegram_id', $user_data['telegram_id'])->first()) {
             return UserResource::make($action($user_data));
         }
 
@@ -31,7 +31,7 @@ class UserController extends Controller
 
     public function show(GetUserQuery $query): UserResource
     {
-        $user = new GetUserQuery();
+        $user = new $query;
 
         return UserResource::make($user);
     }
