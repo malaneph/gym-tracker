@@ -19,6 +19,7 @@ Route::post('/bot/webhook', fn(Nutgram $bot) => $bot->run());
 Route::controller(ExerciseController::class)->prefix('/exercises')->group(function () {
     Route::get('/', 'index');
     Route::get('/search', 'search');
+    Route::post('/', 'store');
 });
 
 Route::controller(WorkoutPlanController::class)->prefix('/plans')->group(function () {

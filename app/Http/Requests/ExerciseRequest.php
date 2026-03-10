@@ -9,11 +9,10 @@ class ExerciseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'uuid' => ['required'],
-            'name' => ['required'],
-            'description' => ['required'],
-            'muscles' => ['required'],
-            'tutorial_url' => ['required'],
+            'name' => ['required', 'string'],
+            'description' => ['string'],
+            'muscles' => ['string'],
+            'tutorial_url' => ['string'],
         ];
     }
 

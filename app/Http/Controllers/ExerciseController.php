@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Actions\CreateExercise;
 use App\Actions\DeleteExercise;
+use App\Data\ExerciseData;
 use App\Http\Requests\ExerciseRequest;
 use App\Http\Requests\SearchExerciseRequest;
 use App\Http\Resources\ExerciseResource;
@@ -29,7 +30,10 @@ class ExerciseController extends Controller
 
     public function store(ExerciseRequest $request, CreateExercise $action)
     {
-        return ExerciseResource::make($action($request->validated()));
+        $data = ExerciseData::from($request->validated());
+        $action($data);
+
+        return ExerciseResource::make($data);
     }
 
     public function show(Exercise $exercise)

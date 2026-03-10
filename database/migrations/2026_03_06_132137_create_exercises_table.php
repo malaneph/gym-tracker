@@ -10,9 +10,9 @@ return new class extends Migration {
         Schema::create('exercises', function (Blueprint $table) {
             $table->uuid('uuid');
             $table->string('name');
-            $table->text('description');
-            $table->string('muscles');
-            $table->string('tutorial_url');
+            $table->text('description')->nullable();
+            $table->string('muscles')->nullable();
+            $table->string('tutorial_url')->nullable();
             $table->timestamps();
         });
     }
