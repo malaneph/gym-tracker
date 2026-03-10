@@ -5,9 +5,11 @@ namespace App\Actions;
 use App\Models\Exercise;
 use DB;
 
-class DeleteExerciseAction
+class DeleteExercise
 {
-    public function __construct() {}
+    public function __construct()
+    {
+    }
 
     public function __invoke(Exercise $exercise): void
     {

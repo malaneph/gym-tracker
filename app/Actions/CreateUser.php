@@ -5,9 +5,11 @@ namespace App\Actions;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
-class CreateUserAction
+class CreateUser
 {
-    public function __construct() {}
+    public function __construct()
+    {
+    }
 
     public function __invoke(array $attributes): void
     {

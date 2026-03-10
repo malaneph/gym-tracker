@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\CreateExerciseAction;
-use App\Actions\DeleteExerciseAction;
+use App\Actions\CreateExercise;
+use App\Actions\DeleteExercise;
 use App\Http\Requests\ExerciseRequest;
 use App\Http\Requests\SearchExerciseRequest;
 use App\Http\Resources\ExerciseResource;
@@ -27,7 +27,7 @@ class ExerciseController extends Controller
         return ExerciseResource::collection($exercises);
     }
 
-    public function store(ExerciseRequest $request, CreateExerciseAction $action)
+    public function store(ExerciseRequest $request, CreateExercise $action)
     {
         return ExerciseResource::make($action($request->validated()));
     }
@@ -44,7 +44,7 @@ class ExerciseController extends Controller
         return new ExerciseResource($exercise);
     }
 
-    public function destroy(Exercise $exercise, DeleteExerciseAction $action)
+    public function destroy(Exercise $exercise, DeleteExercise $action)
     {
         $action($exercise);
 

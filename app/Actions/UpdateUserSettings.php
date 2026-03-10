@@ -4,9 +4,11 @@ namespace App\Actions;
 
 use DB;
 
-class UpdateUserSettingsAction
+class UpdateUserSettings
 {
-    public function __construct() {}
+    public function __construct()
+    {
+    }
 
     public function __invoke(array $attributes): void
     {

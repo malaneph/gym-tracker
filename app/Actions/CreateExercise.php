@@ -5,9 +5,11 @@ namespace App\Actions;
 use App\Models\Exercise;
 use Illuminate\Support\Facades\DB;
 
-class CreateExerciseAction
+class CreateExercise
 {
-    public function __construct() {}
+    public function __construct()
+    {
+    }
 
     public function __invoke(array $attributes): void
     {
