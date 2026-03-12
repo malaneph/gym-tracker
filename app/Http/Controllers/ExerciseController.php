@@ -33,7 +33,9 @@ class ExerciseController extends Controller
         $data = ExerciseData::from($request->validated());
         $action($data);
 
-        return ExerciseResource::make($data);
+        return ExerciseResource::make(
+            Exercise::where('name', $data->name)->first()
+        );
     }
 
     public function show(Exercise $exercise)

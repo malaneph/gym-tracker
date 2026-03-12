@@ -12,7 +12,7 @@ class ExerciseResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'uuid' => $this->uuid,
+            'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
             'muscles' => $this->muscles,

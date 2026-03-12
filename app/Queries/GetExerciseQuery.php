@@ -21,6 +21,6 @@ class GetExerciseQuery
 
     public function search(string $search): EloquentBuilder
     {
-        return $this->builder()->where('name', 'like', "%{$search}%");
+        return $this->builder()->where('name', 'like', $search);
     }
 }
