@@ -22,9 +22,10 @@ class WorkoutPlanController extends Controller
 
     public function store(WorkoutPlanRequest $request, CreateWorkoutPlan $action, GetWorkoutPlanQuery $query)
     {
-        $action($request->validated());
-        $result = $query->builder()->latest()->first();
-        
+        $data = $request->validated();
+        $action($data);
+        $result = $query->builder()->latest('created_at')->first();
+
         return new WorkoutPlanResource($result);
     }
 

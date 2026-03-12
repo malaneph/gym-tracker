@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class WorkoutPlanExercises extends Model
+class WorkoutPlanExercise extends Model
 {
     public function workoutPlan(): BelongsTo
     {
