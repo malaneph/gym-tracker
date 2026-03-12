@@ -1,7 +1,6 @@
 <?php
 
 use App\Enums\WorkoutPlanStatusEnum;
-use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,7 +10,7 @@ return new class extends Migration {
     {
         Schema::create('workout_plans', function (Blueprint $table) {
             $table->uuid('id');
-            $table->foreignIdFor(User::class, 'user');
+            $table->foreignUuid('user')->constrained('users');
             $table->string('name');
             $table->string('category');
             $table->integer('is_default')->default(0);
