@@ -41,6 +41,7 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
+            'id' => 'string',
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
@@ -48,6 +49,11 @@ class User extends Authenticatable
 
     public function settings()
     {
-        return $this->hasOne(UserSettings::class);
+        return $this->hasOne(UserSettings::class, 'user_id');
+    }
+
+    public function workoutPlans()
+    {
+        return $this->hasMany(WorkoutPlan::class, 'user_id');
     }
 }

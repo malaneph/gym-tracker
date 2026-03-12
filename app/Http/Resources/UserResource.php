@@ -10,7 +10,7 @@ class UserResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'uuid' => $this->uuid,
+            'id' => $this->id,
             'username' => $this->username,
             'settings' => JsonResource::make($this->settings),
         ];

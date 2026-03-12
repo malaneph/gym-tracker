@@ -15,8 +15,9 @@ class UserController extends Controller
     public function authUser(AuthUserRequest $request, CreateUser $action): ?UserResource
     {
         $user_data = $request->validated();
-        if (!$user = User::where('telegram_id', $user_data['telegram_id'])->first()) {
-            return UserResource::make($action($user_data));
+        if (!$user = User::where('username', $user_data['username'])->first()) {
+            $action($user_data);
+            return UserResource::make(User::where('username', $user_data['username'])->first());
         }
 
         return UserResource::make($user);
