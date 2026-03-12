@@ -8,8 +8,8 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('exercises', function (Blueprint $table) {
-            $table->uuid('uuid');
-            $table->string('name');
+            $table->uuid('id')->primary();
+            $table->string('name')->unique();
             $table->text('description')->nullable();
             $table->string('muscles')->nullable();
             $table->string('tutorial_url')->nullable();

@@ -10,7 +10,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('workout_plan_exercises', function (Blueprint $table) {
-            $table->uuid('uuid');
+            $table->uuid('id');
             $table->foreignIdFor(WorkoutPlan::class, 'workout_plan');
             $table->foreignIdFor(Exercise::class, 'exercise');
             $table->integer('position');
