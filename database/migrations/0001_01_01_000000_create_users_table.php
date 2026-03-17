@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->uuid('id')->primary();
             $table->string('username');
             $table->integer('telegram_id')->nullable();
+            $table->string('password')->nullable();
             $table->string('email')->unique()->nullable();
             $table->string('avatar')->nullable();
             $table->timestamps();
@@ -30,7 +31,7 @@ return new class extends Migration {
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
-            $table->id();
+            $table->id()->primary();
             $table->foreignUuid('user')->constrained('users');
             $table->string('token');
             $table->timestamp('created_at')->nullable();
