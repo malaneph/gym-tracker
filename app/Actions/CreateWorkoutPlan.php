@@ -7,9 +7,7 @@ use DB;
 
 class CreateWorkoutPlan
 {
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     public function __invoke(array $attributes): void
     {

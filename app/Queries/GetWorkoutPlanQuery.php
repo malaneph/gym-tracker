@@ -7,9 +7,7 @@ use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 
 class GetWorkoutPlanQuery
 {
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     public function builder(): EloquentBuilder
     {

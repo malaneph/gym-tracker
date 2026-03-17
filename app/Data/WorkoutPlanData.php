@@ -14,6 +14,5 @@ class WorkoutPlanData extends Data
         public string $category,
         public int $is_default,
         public ?WorkoutPlanStatus $status = WorkoutPlanStatus::DRAFT,
-    ) {
-    }
+    ) {}
 }

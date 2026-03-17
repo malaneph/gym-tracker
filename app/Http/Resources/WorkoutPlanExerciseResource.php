@@ -2,12 +2,12 @@
 
 namespace App\Http\Resources;
 
-use App\Models\WorkoutPlanExercises;
+use App\Models\WorkoutPlanExercise;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/** @mixin WorkoutPlanExercises */
-class WorkoutPlanExercisesResource extends JsonResource
+/** @mixin WorkoutPlanExercise */
+class WorkoutPlanExerciseResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
@@ -20,7 +20,7 @@ class WorkoutPlanExercisesResource extends JsonResource
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
 
-            'variation' => ExerciseResource::make($this->whenLoaded('exerciseVariation')),
+            'variation' => ExerciseResource::make($this->exerciseVariation),
         ];
     }
 }

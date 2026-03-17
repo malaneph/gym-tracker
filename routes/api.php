@@ -3,8 +3,8 @@
 use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkoutPlanController;
+use App\Http\Middleware\AuthMiddleware;
 use Illuminate\Support\Facades\Route;
-use Nutgram\Laravel\Middleware\ValidateWebAppData;
 use SergiX44\Nutgram\Nutgram;
 
 Route::controller(UserController::class)->prefix('/auth')->group(function () {
@@ -27,10 +27,17 @@ Route::middleware(AuthMiddleware::class)
         Route::post('/', 'store');
     });
 
-Route::controller(WorkoutPlanController::class)->prefix('/plans')->group(function () {
-    Route::get('/', 'index');
-    Route::post('/', 'store');
-    Route::get('/{workoutPlan}', 'show');
-    Route::patch('/{workoutPlan}', 'update');
-    Route::delete('/{workoutPlan}', 'destroy');
-});
+Route::middleware(AuthMiddleware::class)
+    ->controller(WorkoutPlanController::class)
+    ->prefix('/plans')
+    ->group(function () {
+        Route::get('/', 'index');
+        Route::post('/', 'store');
+        Route::get('/{workoutPlan}', 'show');
+        Route::patch('/{workoutPlan}', 'update');
+        Route::delete('/{workoutPlan}', 'destroy');
+        Route::post('/{workoutPlan}/exercises', 'addExercise');
+        Route::patch('/{workoutPlan}/exercises/{exercise}', 'updateExercise');
+        Route::post('/{workoutPlan}/export', 'exportWorkoutPlan');
+        Route::post('/import', 'importWorkoutPlan');
+    });

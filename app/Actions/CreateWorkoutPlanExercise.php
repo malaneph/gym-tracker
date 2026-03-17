@@ -2,19 +2,31 @@
 
 namespace App\Actions;
 
-use App\Models\WorkoutPlanExercises;
+use App\Models\Exercise;
+use App\Models\WorkoutPlan;
+use App\Models\WorkoutPlanExercise;
 use DB;
+use Exception;
 
 class CreateWorkoutPlanExercise
 {
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
-    public function __invoke(array $attributes): void
+    public function __invoke(WorkoutPlan $workoutPlan, array $attributes): void
     {
-        DB::transaction(function () use ($attributes) {
-            WorkoutPlanExercises::create($attributes);
+        DB::transaction(function () use ($workoutPlan, $attributes) {
+            $count = $workoutPlan->exercises()->count();
+
+            if (isset($attributes['exercise_name'])) {
+                $exercise = Exercise::firstOrCreate(['name' => $attributes['exercise_name']]);
+            }
+
+            WorkoutPlanExercise::create([
+                'workout_plan' => $workoutPlan->id,
+                'exercise' => $exercise->id ?? throw new Exception('Exercise not found'),
+                'position' => $count + 1,
+                ...$attributes,
+            ]);
         });
     }
 }

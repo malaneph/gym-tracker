@@ -1,21 +1,17 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\WorkoutPlan;
 
-use App\Models\User;
 use App\Models\WorkoutPlan;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class WorkoutPlanRequest extends FormRequest
+class CreateRequest extends BaseRequest
 {
     public function rules(): array
     {
         return [
             'name' => ['required', 'string', Rule::unique(WorkoutPlan::class, 'name')],
-            'user' => ['required', 'string', Rule::exists(User::class, 'id')],
             'category' => ['required', 'string'],
-            'is_default' => ['required', 'boolean'],
         ];
     }
 

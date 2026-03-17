@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Str;
 
 class WorkoutPlan extends Model
 {
@@ -15,7 +16,7 @@ class WorkoutPlan extends Model
         'name',
         'category',
         'is_default',
-        'status'
+        'status',
     ];
 
     public function user(): BelongsTo
@@ -34,6 +35,24 @@ class WorkoutPlan extends Model
 
     public function exercises()
     {
-        return $this->hasMany(WorkoutPlanExercises::class);
+        return $this->hasMany(WorkoutPlanExercise::class, 'workout_plan');
+    }
+
+    public function exportTokens()
+    {
+        return $this->hasMany(WorkoutPlanExportToken::class, 'workout_plan');
+    }
+
+    public function createToken(): void
+    {
+        $this->exportTokens()->create([
+            'token' => (string) Str::uuid(),
+        ]
+        );
+    }
+
+    public function getToken(): array
+    {
+        return $this->exportTokens()->latest()->first('token')->toArray();
     }
 }
