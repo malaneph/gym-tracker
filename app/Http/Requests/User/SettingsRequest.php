@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserSettingsRequest extends FormRequest
+class SettingsRequest extends FormRequest
 {
     public function rules(): array
     {
         return [
-
         ];
     }
 
