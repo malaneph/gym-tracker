@@ -7,14 +7,16 @@ use Illuminate\Support\Facades\Route;
 use Nutgram\Laravel\Middleware\ValidateWebAppData;
 use SergiX44\Nutgram\Nutgram;
 
-Route::middleware(ValidateWebAppData::class)->post('/auth/init', [UserController::class, 'authUser']);
-
-Route::middleware(ValidateWebAppData::class)->controller(UserController::class)->group(function () {
-    Route::post('/user/settings', 'updateUserSettings');
-    Route::post('/auth/init', 'authUser');
+Route::controller(UserController::class)->prefix('/auth')->group(function () {
+    Route::post('/login', 'login');
+    Route::post('/init', 'authUser');
 });
 
-Route::post('/bot/webhook', fn(Nutgram $bot) => $bot->run());
+Route::middleware(AuthMiddleware::class)->controller(UserController::class)->group(function () {
+    Route::post('/user/settings', 'updateUserSettings');
+});
+
+Route::post('/bot/webhook', fn (Nutgram $bot) => $bot->run());
 
 Route::controller(ExerciseController::class)->prefix('/exercises')->group(function () {
     Route::get('/', 'index');

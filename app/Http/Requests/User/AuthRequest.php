@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AuthUserRequest extends FormRequest
+class AuthRequest extends FormRequest
 {
     public function rules(): array
     {
@@ -22,7 +22,7 @@ class AuthUserRequest extends FormRequest
     {
         $data = [];
         parse_str($this->input('initData'), $data);
-        
+
         return array_merge(parent::validated(), $data);
     }
 }
