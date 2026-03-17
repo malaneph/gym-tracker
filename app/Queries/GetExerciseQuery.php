@@ -7,9 +7,7 @@ use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 
 class GetExerciseQuery
 {
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     /**
      * @return EloquentBuilder<Exercise>

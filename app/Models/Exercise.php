@@ -10,7 +10,7 @@ class Exercise extends Model
     use HasUuids;
 
     protected $fillable = [
-        'name', 'description', 'muscles', 'tutorial_url'
+        'name', 'description', 'muscles', 'tutorial_url',
     ];
 
     protected function casts(): array

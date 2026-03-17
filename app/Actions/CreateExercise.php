@@ -8,9 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class CreateExercise
 {
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     public function __invoke(ExerciseData $data): void
     {

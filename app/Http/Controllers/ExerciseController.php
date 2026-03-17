@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Actions\CreateExercise;
 use App\Actions\DeleteExercise;
 use App\Data\ExerciseData;
-use App\Http\Requests\ExerciseRequest;
-use App\Http\Requests\SearchExerciseRequest;
+use App\Http\Requests\Exercise\BaseRequest;
+use App\Http\Requests\Exercise\SearchRequest;
 use App\Http\Resources\ExerciseResource;
 use App\Models\Exercise;
 use App\Queries\GetExerciseQuery;
@@ -20,7 +20,7 @@ class ExerciseController extends Controller
         return ExerciseResource::collection($exercises);
     }
 
-    public function search(SearchExerciseRequest $request, GetExerciseQuery $query)
+    public function search(SearchRequest $request, GetExerciseQuery $query)
     {
         $name = $request->validated('name');
         $exercises = $query->search($name)->paginate(10);
@@ -28,7 +28,7 @@ class ExerciseController extends Controller
         return ExerciseResource::collection($exercises);
     }
 
-    public function store(ExerciseRequest $request, CreateExercise $action)
+    public function store(BaseRequest $request, CreateExercise $action)
     {
         $data = ExerciseData::from($request->validated());
         $action($data);
@@ -43,7 +43,7 @@ class ExerciseController extends Controller
         return new ExerciseResource($exercise);
     }
 
-    public function update(ExerciseRequest $request, Exercise $exercise)
+    public function update(BaseRequest $request, Exercise $exercise)
     {
         $exercise->update($request->validated());
 

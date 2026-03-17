@@ -7,9 +7,7 @@ use DB;
 
 class DeleteExercise
 {
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     public function __invoke(Exercise $exercise): void
     {
