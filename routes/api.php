@@ -3,6 +3,7 @@
 use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkoutPlanController;
+use App\Http\Controllers\WorkoutSessionController;
 use App\Http\Middleware\AuthMiddleware;
 use Illuminate\Support\Facades\Route;
 use SergiX44\Nutgram\Nutgram;
@@ -40,4 +41,17 @@ Route::middleware(AuthMiddleware::class)
         Route::patch('/{workoutPlan}/exercises/{exercise}', 'updateExercise');
         Route::post('/{workoutPlan}/export', 'exportWorkoutPlan');
         Route::post('/import', 'importWorkoutPlan');
+    });
+
+Route::middleware(AuthMiddleware::class)
+    ->controller(WorkoutSessionController::class)
+    ->prefix('/sessions')
+    ->group(function () {
+        Route::get('/', 'index');
+        Route::post('/', 'store');
+        Route::get('/{workoutSession}', 'show');
+        Route::patch('/{workoutSession}', 'update');
+        Route::delete('/{workoutSession}', 'destroy');
+        Route::get('/active', 'getActiveWorkoutSession');
+        Route::post('/{workoutSession}/finish', 'finishWorkoutSession');
     });

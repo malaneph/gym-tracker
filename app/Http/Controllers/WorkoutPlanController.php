@@ -41,7 +41,7 @@ class WorkoutPlanController extends Controller
 
     public function show(WorkoutPlan $workoutPlan)
     {
-        return new WorkoutPlanResource($workoutPlan);
+        return WorkoutPlanResource::make($workoutPlan);
     }
 
     public function update(UpdateRequest $request, WorkoutPlan $workoutPlan, UpdateWorkoutPlan $action)
