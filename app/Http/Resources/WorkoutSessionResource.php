@@ -20,7 +20,8 @@ class WorkoutSessionResource extends JsonResource
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'status' => WorkoutStatus::tryFrom($this->status)->label(),
-            'workoutPlan' => WorkoutPlanResource::make($this->workoutPlan),
+            'workout_plan' => WorkoutPlanResource::make($this->workoutPlan),
+            'sets' => WorkoutSetResource::collection($this->sets),
         ];
     }
 }

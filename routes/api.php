@@ -4,6 +4,7 @@ use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkoutPlanController;
 use App\Http\Controllers\WorkoutSessionController;
+use App\Http\Controllers\WorkoutSetController;
 use App\Http\Middleware\AuthMiddleware;
 use Illuminate\Support\Facades\Route;
 use SergiX44\Nutgram\Nutgram;
@@ -54,4 +55,11 @@ Route::middleware(AuthMiddleware::class)
         Route::delete('/{workoutSession}', 'destroy');
         Route::get('/active', 'getActiveWorkoutSession');
         Route::post('/{workoutSession}/finish', 'finishWorkoutSession');
+
+        Route::controller(WorkoutSetController::class)->prefix('/{workoutSession}/sets')->group(function () {
+            Route::post('/', 'store');
+            Route::get('/{workoutSet}', 'show');
+            Route::patch('/{workoutSet}', 'update');
+            Route::delete('/{workoutSet}', 'destroy');
+        });
     });

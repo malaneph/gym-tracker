@@ -29,6 +29,11 @@ class WorkoutSession extends Model
         return $this->belongsTo(WorkoutPlan::class, 'workout_plan', 'id');
     }
 
+    public function sets()
+    {
+        return $this->hasMany(WorkoutSet::class, 'workout_session', 'id');
+    }
+
     protected function casts(): array
     {
         return [
