@@ -1,6 +1,6 @@
 <?php
 
-use App\Enums\WorkoutPlanStatusEnum;
+use App\Enums\WorkoutStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('category');
             $table->integer('is_default')->default(0);
-            $table->integer('status')->default(WorkoutPlanStatusEnum::DRAFT->value);
+            $table->integer('status')->default(WorkoutStatus::DRAFT->value);
             $table->timestamps();
         });
     }

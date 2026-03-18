@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources;
 
-use App\Enums\WorkoutPlanStatus;
+use App\Enums\WorkoutStatus;
 use App\Models\WorkoutPlan;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -17,7 +17,7 @@ class WorkoutPlanResource extends JsonResource
             'name' => $this->name,
             'category' => $this->category,
             'is_default' => $this->is_default,
-            'status' => WorkoutPlanStatus::from($this->status)->label(),
+            'status' => WorkoutStatus::from($this->status)->label(),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
 
