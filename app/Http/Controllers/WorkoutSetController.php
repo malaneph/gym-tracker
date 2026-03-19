@@ -19,6 +19,7 @@ class WorkoutSetController extends Controller
     public function store(WorkoutSession $workoutSession, CreateRequest $request, CreateWorkoutSet $action)
     {
         $action($workoutSession, $request->validated());
+
         $workoutSet = WorkoutSet::latest('created_at')->first();
 
         return WorkoutSetResource::make($workoutSet);

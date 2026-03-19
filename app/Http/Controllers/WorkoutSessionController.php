@@ -50,12 +50,15 @@ class WorkoutSessionController extends Controller
 
     public function getActiveWorkoutSession(GetWorkoutSessionQuery $query)
     {
-        try {
-            $workoutSession = $query->builder()
-                ->where('status', WorkoutStatus::DRAFT)
-                ->firstOrFail();
-        } catch (\Exception $e) {
-            return $e->getMessage();
+        $workoutSession = $query->builder()
+            ->where('status', '=', WorkoutStatus::DRAFT->value)
+            ->first();
+
+        if (! $workoutSession) {
+            return response()->json([
+                'message' => 'No active workout session found',
+                'data' => [],
+            ], 404);
         }
 
         return WorkoutSessionResource::make($workoutSession);
@@ -63,7 +66,9 @@ class WorkoutSessionController extends Controller
 
     public function finishWorkoutSession(WorkoutSession $workoutSession, UpdateWorkoutSession $action)
     {
-        $action($workoutSession, ['status' => WorkoutStatus::FINISHED]);
+        $action($workoutSession, [
+            'status' => WorkoutStatus::FINISHED->value,
+        ]);
 
         return WorkoutSessionResource::make($workoutSession->refresh());
     }
