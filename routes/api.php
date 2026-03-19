@@ -35,13 +35,16 @@ Route::middleware(AuthMiddleware::class)
     ->group(function () {
         Route::get('/', 'index');
         Route::post('/', 'store');
-        Route::get('/{workoutPlan}', 'show');
-        Route::patch('/{workoutPlan}', 'update');
-        Route::delete('/{workoutPlan}', 'destroy');
-        Route::post('/{workoutPlan}/exercises', 'addExercise');
-        Route::patch('/{workoutPlan}/exercises/{exercise}', 'updateExercise');
-        Route::post('/{workoutPlan}/export', 'exportWorkoutPlan');
         Route::post('/import', 'importWorkoutPlan');
+
+        Route::prefix('/{workoutPlan}')->group(function () {
+            Route::get('/', 'show');
+            Route::patch('/', 'update');
+            Route::delete('/', 'destroy');
+            Route::post('/exercises', 'addExercise');
+            Route::patch('/exercises/{exercise}', 'updateExercise');
+            Route::post('/export', 'exportWorkoutPlan');
+        });
     });
 
 Route::middleware(AuthMiddleware::class)
@@ -50,16 +53,21 @@ Route::middleware(AuthMiddleware::class)
     ->group(function () {
         Route::get('/', 'index');
         Route::post('/', 'store');
-        Route::get('/{workoutSession}', 'show');
-        Route::patch('/{workoutSession}', 'update');
-        Route::delete('/{workoutSession}', 'destroy');
         Route::get('/active', 'getActiveWorkoutSession');
-        Route::post('/{workoutSession}/finish', 'finishWorkoutSession');
+
+        Route::prefix('/{workoutSession}')->group(function () {
+            Route::get('/', 'show');
+            Route::patch('/', 'update');
+            Route::delete('/', 'destroy');
+            Route::post('/finish', 'finishWorkoutSession');
+        });
 
         Route::controller(WorkoutSetController::class)->prefix('/{workoutSession}/sets')->group(function () {
             Route::post('/', 'store');
-            Route::get('/{workoutSet}', 'show');
-            Route::patch('/{workoutSet}', 'update');
-            Route::delete('/{workoutSet}', 'destroy');
+            Route::prefix('/{workoutSet}')->group(function () {
+                Route::post('/', 'show');
+                Route::patch('/', 'update');
+                Route::delete('/', 'destroy');
+            });
         });
     });
