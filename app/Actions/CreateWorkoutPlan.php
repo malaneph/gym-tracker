@@ -11,6 +11,8 @@ class CreateWorkoutPlan
 
     public function __invoke(array $attributes): void
     {
+        $attributes['user'] = auth()->id();
+
         DB::transaction(function () use ($attributes) {
             WorkoutPlan::create($attributes);
         });

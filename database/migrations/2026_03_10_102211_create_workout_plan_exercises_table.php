@@ -12,8 +12,8 @@ return new class extends Migration
     {
         Schema::create('workout_plan_exercises', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignIdFor(WorkoutPlan::class, 'workout_plan');
-            $table->foreignIdFor(Exercise::class, 'exercise');
+            $table->foreignUuid(WorkoutPlan::class)->constrained('workout_plans');
+            $table->foreignUuid(Exercise::class)->constrained('exercises');
             $table->integer('position');
             $table->integer('is_optional')->default(0);
             $table->text('notes')->nullable();
