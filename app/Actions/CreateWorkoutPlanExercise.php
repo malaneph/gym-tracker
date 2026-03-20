@@ -10,7 +10,9 @@ use Exception;
 
 class CreateWorkoutPlanExercise
 {
-    public function __construct() {}
+    public function __construct()
+    {
+    }
 
     public function __invoke(WorkoutPlan $workoutPlan, array $attributes): void
     {
@@ -19,6 +21,8 @@ class CreateWorkoutPlanExercise
 
             if (isset($attributes['exercise_name'])) {
                 $exercise = Exercise::firstOrCreate(['name' => $attributes['exercise_name']]);
+            } else {
+                $exercise = Exercise::find($attributes['exercise']);
             }
 
             WorkoutPlanExercise::create([

@@ -13,6 +13,11 @@ class AddExerciseRequest extends FormRequest
         return [
             'exercise_name' => ['string'],
             'exercise' => [Rule::exists(Exercise::class, 'id')],
+            'sets' => ['integer'],
+            'reps' => ['integer'],
+            'rest_seconds' => ['integer'],
+            'rpe' => ['integer'],
+            'notes' => ['string'],
             'position' => ['integer'],
             'is_optional' => ['boolean'],
         ];

@@ -22,6 +22,7 @@ class WorkoutPlanExerciseResource extends JsonResource
             'notes' => $this->notes,
             'sets' => $this->sets,
             'reps' => $this->reps,
+            'rpe' => $this->rpe,
             'rest_seconds' => $this->rest_seconds,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
