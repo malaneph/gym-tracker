@@ -45,15 +45,14 @@ class UserController extends Controller
 
     public function updateUserSettings(SettingsRequest $request, UpdateUserSettings $action): UserResource
     {
-        $data = $request->validated();
+        $user = auth()->user();
+        $action($user, $request->validated());
 
-        return UserResource::make($action($data));
+        return UserResource::make($user->refresh());
     }
 
     public function show(GetUserQuery $query): UserResource
     {
-        $user = new $query;
-
-        return UserResource::make($user);
+        return UserResource::make(auth()->user());
     }
 }

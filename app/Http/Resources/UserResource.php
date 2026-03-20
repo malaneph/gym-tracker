@@ -12,7 +12,8 @@ class UserResource extends JsonResource
         return [
             'id' => $this->id,
             'username' => $this->username,
-            'settings' => JsonResource::make($this->settings),
+            'telegram_id' => $this->telegram_id,
+            'settings' => UserSettingsResource::make($this->settings),
         ];
     }
 }

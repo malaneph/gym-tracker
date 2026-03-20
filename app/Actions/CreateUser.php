@@ -12,7 +12,8 @@ class CreateUser
     public function __invoke(array $attributes): void
     {
         DB::transaction(function () use ($attributes) {
-            User::create($attributes);
+            $user = User::create($attributes);
+            $user->settings()->create();
         });
     }
 }

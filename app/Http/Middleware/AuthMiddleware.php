@@ -28,6 +28,7 @@ class AuthMiddleware
                 'error' => 'Authorization required!',
             ], 401);
         }
+
         [$id, $token] = explode('|', $bearer, 2);
         $instance = DB::table('personal_access_tokens')->find($id);
 

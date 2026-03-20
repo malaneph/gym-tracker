@@ -15,7 +15,8 @@ Route::controller(UserController::class)->prefix('/auth')->group(function () {
 });
 
 Route::middleware(AuthMiddleware::class)->controller(UserController::class)->group(function () {
-    Route::post('/user/settings', 'updateUserSettings');
+    Route::get('/', 'show');
+    Route::patch('/user/settings', 'updateUserSettings');
 });
 
 Route::post('/bot/webhook', fn (Nutgram $bot) => $bot->run());
