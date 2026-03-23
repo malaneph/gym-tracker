@@ -10,9 +10,7 @@ use Exception;
 
 class CreateWorkoutPlanExercise
 {
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     public function __invoke(WorkoutPlan $workoutPlan, array $attributes): void
     {

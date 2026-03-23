@@ -38,8 +38,8 @@ class WorkoutSession extends Model
     {
         return [
             'id' => 'string',
-            'started_at' => 'timestamp',
-            'finished_at' => 'timestamp',
+            'started_at' => 'datetime',
+            'finished_at' => 'datetime',
             'status' => 'integer',
         ];
     }

@@ -24,9 +24,12 @@ class WorkoutSessionController extends Controller
     public function store(CreateRequest $request, GetWorkoutSessionQuery $query, CreateWorkoutSession $action)
     {
         $action($request->validated());
-        $workoutSession = $query->builder()->latest('created_at')->first();
+        $workoutSession = $query->builder()
+            ->whereIn('status', [WorkoutStatus::ACTIVE->value, WorkoutStatus::DRAFT->value])
+            ->orderByDesc('created_at')
+            ->first();
 
-        return WorkoutSessionResource::make($workoutSession);
+        return new WorkoutSessionResource($workoutSession);
     }
 
     public function show(WorkoutSession $workoutSession)

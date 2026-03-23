@@ -61,14 +61,14 @@ Route::middleware(AuthMiddleware::class)
             Route::patch('/', 'update');
             Route::delete('/', 'destroy');
             Route::post('/finish', 'finishWorkoutSession');
-        });
 
-        Route::controller(WorkoutSetController::class)->prefix('/{workoutSession}/sets')->group(function () {
-            Route::post('/', 'store');
-            Route::prefix('/{workoutSet}')->group(function () {
-                Route::post('/', 'show');
-                Route::patch('/', 'update');
-                Route::delete('/', 'destroy');
+            Route::controller(WorkoutSetController::class)->prefix('/sets')->group(function () {
+                Route::post('/', 'store');
+                Route::prefix('/{workoutSet}')->group(function () {
+                    Route::post('/', 'show');
+                    Route::patch('/', 'update');
+                    Route::delete('/', 'destroy');
+                });
             });
         });
     });

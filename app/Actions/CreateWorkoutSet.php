@@ -11,12 +11,13 @@ class CreateWorkoutSet
 {
     public function __construct() {}
 
-    public function __invoke(WorkoutSession $session, array $attributes): void
+    public function __invoke(WorkoutSession $workoutSession, array $attributes): void
     {
-        if ($session->status !== WorkoutStatus::DRAFT->value) {
+        if ($workoutSession->status !== WorkoutStatus::DRAFT->value) {
             throw new \RuntimeException('Cannot create a new set for a workout session that is not in draft status');
         }
-        $attributes['workout_session'] = $session->id;
+        $attributes['user'] = auth()->id();
+        $attributes['workout_session'] = $workoutSession->id;
 
         DB::transaction(function () use ($attributes) {
             WorkoutSet::create($attributes);

@@ -13,6 +13,7 @@ class WorkoutSetResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'workout_plan_exercise' => $this->workout_plan_exercise,
             'set_index' => $this->set_index,
             'reps' => $this->reps,
             'weight' => $this->weight,

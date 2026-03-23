@@ -22,7 +22,7 @@ class WorkoutSet extends Model
 
     public function workoutSession(): BelongsTo
     {
-        return $this->belongsTo(WorkoutSession::class, 'workout_session');
+        return $this->belongsTo(WorkoutSession::class, 'workout_session', 'id');
     }
 
     public function workoutPlanExercise(): BelongsTo
