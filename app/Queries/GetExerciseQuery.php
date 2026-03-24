@@ -3,11 +3,14 @@
 namespace App\Queries;
 
 use App\Models\Exercise;
+use DB;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 
 class GetExerciseQuery
 {
-    public function __construct() {}
+    public function __construct()
+    {
+    }
 
     /**
      * @return EloquentBuilder<Exercise>
@@ -19,6 +22,6 @@ class GetExerciseQuery
 
     public function search(string $search): EloquentBuilder
     {
-        return $this->builder()->where('name', 'like', $search);
+        return $this->builder()->where(DB::raw('LOWER(name)'), 'like', '%'.strtolower($search).'%');
     }
 }
