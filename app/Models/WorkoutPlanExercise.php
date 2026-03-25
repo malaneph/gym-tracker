@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Queries\WorkoutSetQuery;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -41,6 +42,16 @@ class WorkoutPlanExercise extends Model
     {
         return [
             'id' => 'string',
+        ];
+    }
+
+    public function getStats(): array
+    {
+        $sets = (new WorkoutSetQuery())->builder()->where('workout_plan_exercise', $this->id)->get();
+        $personal_best = $sets->sortByDesc('weight')->first();
+
+        return [
+            'personal_best' => $personal_best->weight.' x '.$personal_best->reps,
         ];
     }
 }

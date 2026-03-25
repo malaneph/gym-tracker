@@ -16,7 +16,7 @@ class WorkoutSessionController extends Controller
 {
     public function index(GetWorkoutSessionQuery $query)
     {
-        $workoutSessions = $query->builder()->paginate(10);
+        $workoutSessions = $query->builder()->orderByDesc('finished_at')->paginate(10);
 
         return WorkoutSessionResource::collection($workoutSessions);
     }
@@ -57,7 +57,7 @@ class WorkoutSessionController extends Controller
             ->where('status', '=', WorkoutStatus::DRAFT->value)
             ->first();
 
-        if (! $workoutSession) {
+        if (!$workoutSession) {
             return response()->json([
                 'message' => 'No active workout session found',
                 'data' => [],

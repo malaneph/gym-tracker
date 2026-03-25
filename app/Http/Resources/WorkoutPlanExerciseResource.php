@@ -20,6 +20,7 @@ class WorkoutPlanExerciseResource extends JsonResource
             'position' => $this->position,
             'is_optional' => $this->is_optional,
             'notes' => $this->notes,
+            'planned_sets' => $this->planned_sets,
             'sets' => $this->sets,
             'reps' => $this->reps,
             'rpe' => $this->rpe,
@@ -27,6 +28,7 @@ class WorkoutPlanExerciseResource extends JsonResource
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
 
+            'stats' => $this->getStats(),
             'variation' => ExerciseResource::make($this->exerciseVariation),
         ];
     }

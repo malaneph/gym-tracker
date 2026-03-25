@@ -21,6 +21,7 @@ class WorkoutSetResource extends JsonResource
             'notes' => $this->notes,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'previous_set' => $this->previousSet(),
 
             'workout_session' => $this->workout_session,
         ];

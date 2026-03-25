@@ -19,7 +19,7 @@ Route::middleware(AuthMiddleware::class)->controller(UserController::class)->gro
     Route::patch('/user/settings', 'updateUserSettings');
 });
 
-Route::post('/bot/webhook', fn (Nutgram $bot) => $bot->run());
+Route::post('/bot/webhook', fn(Nutgram $bot) => $bot->run());
 
 Route::middleware(AuthMiddleware::class)
     ->controller(ExerciseController::class)
@@ -52,22 +52,22 @@ Route::middleware(AuthMiddleware::class)
     ->controller(WorkoutSessionController::class)
     ->prefix('/sessions')
     ->group(function () {
-        Route::get('/', 'index');
-        Route::post('/', 'store');
-        Route::get('/active', 'getActiveWorkoutSession');
+        Route::get('/', 'index')->name('sessions.index');
+        Route::post('/', 'store')->name('sessions.store');
+        Route::get('/active', 'getActiveWorkoutSession')->name('sessions.active');
 
         Route::prefix('/{workoutSession}')->group(function () {
-            Route::get('/', 'show');
-            Route::patch('/', 'update');
-            Route::delete('/', 'destroy');
-            Route::post('/finish', 'finishWorkoutSession');
+            Route::get('/', 'show')->name('sessions.show');
+            Route::patch('/', 'update')->name('sessions.update');
+            Route::delete('/', 'destroy')->name('sessions.delete');
+            Route::post('/finish', 'finishWorkoutSession')->name('sessions.finish');
 
             Route::controller(WorkoutSetController::class)->prefix('/sets')->group(function () {
                 Route::post('/', 'store');
                 Route::prefix('/{workoutSet}')->group(function () {
-                    Route::post('/', 'show');
-                    Route::patch('/', 'update');
-                    Route::delete('/', 'destroy');
+                    Route::post('/', 'show')->name('sets.show');
+                    Route::patch('/', 'update')->name('sets.update');
+                    Route::delete('/', 'destroy')->name('sets.delete');
                 });
             });
         });
