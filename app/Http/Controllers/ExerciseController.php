@@ -9,18 +9,18 @@ use App\Http\Requests\Exercise\BaseRequest;
 use App\Http\Requests\Exercise\SearchRequest;
 use App\Http\Resources\ExerciseResource;
 use App\Models\Exercise;
-use App\Queries\GetExerciseQuery;
+use App\Queries\ExerciseQuery;
 
 class ExerciseController extends Controller
 {
-    public function index(GetExerciseQuery $query)
+    public function index(ExerciseQuery $query)
     {
         $exercises = $query->builder()->paginate(10);
 
         return ExerciseResource::collection($exercises);
     }
 
-    public function search(SearchRequest $request, GetExerciseQuery $query)
+    public function search(SearchRequest $request, ExerciseQuery $query)
     {
         $name = $request->validated('name');
         $exercises = $query->search($name)->paginate(10);

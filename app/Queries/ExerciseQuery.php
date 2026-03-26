@@ -6,11 +6,9 @@ use App\Models\Exercise;
 use DB;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 
-class GetExerciseQuery
+class ExerciseQuery
 {
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     /**
      * @return EloquentBuilder<Exercise>

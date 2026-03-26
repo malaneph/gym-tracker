@@ -18,19 +18,19 @@ use App\Http\Resources\WorkoutPlanExerciseResource;
 use App\Http\Resources\WorkoutPlanResource;
 use App\Models\WorkoutPlan;
 use App\Models\WorkoutPlanExercise;
-use App\Queries\GetWorkoutPlanQuery;
+use App\Queries\WorkoutPlanQuery;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class WorkoutPlanController extends Controller
 {
-    public function index(GetWorkoutPlanQuery $query): AnonymousResourceCollection
+    public function index(WorkoutPlanQuery $query): AnonymousResourceCollection
     {
         $workoutPlans = $query->builder()->paginate(10);
 
         return WorkoutPlanResource::collection($workoutPlans);
     }
 
-    public function store(CreateRequest $request, CreateWorkoutPlan $action, GetWorkoutPlanQuery $query)
+    public function store(CreateRequest $request, CreateWorkoutPlan $action, WorkoutPlanQuery $query)
     {
         $data = $request->validated();
         $action($data);

@@ -38,6 +38,11 @@ class WorkoutPlanExercise extends Model
         return $this->belongsTo(Exercise::class, 'exercise_variation');
     }
 
+    public function setsHistory()
+    {
+        return $this->hasMany(WorkoutSet::class, 'workout_plan_exercise');
+    }
+
     protected function casts(): array
     {
         return [
@@ -47,7 +52,7 @@ class WorkoutPlanExercise extends Model
 
     public function getStats(): array
     {
-        $sets = (new WorkoutSetQuery())->builder()->where('workout_plan_exercise', $this->id)->get();
+        $sets = (new WorkoutSetQuery)->builder()->where('workout_plan_exercise', $this->id)->get();
         $personal_best = $sets->sortByDesc('weight')->first();
 
         return [

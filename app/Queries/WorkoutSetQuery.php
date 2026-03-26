@@ -8,9 +8,7 @@ use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 
 class WorkoutSetQuery
 {
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     /**
      * @return EloquentBuilder<WorkoutSet>

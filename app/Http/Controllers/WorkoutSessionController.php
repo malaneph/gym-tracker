@@ -10,18 +10,18 @@ use App\Http\Requests\WorkoutSession\CreateRequest;
 use App\Http\Requests\WorkoutSession\UpdateRequest;
 use App\Http\Resources\WorkoutSessionResource;
 use App\Models\WorkoutSession;
-use App\Queries\GetWorkoutSessionQuery;
+use App\Queries\WorkoutSessionQuery;
 
 class WorkoutSessionController extends Controller
 {
-    public function index(GetWorkoutSessionQuery $query)
+    public function index(WorkoutSessionQuery $query)
     {
         $workoutSessions = $query->builder()->orderByDesc('finished_at')->paginate(10);
 
         return WorkoutSessionResource::collection($workoutSessions);
     }
 
-    public function store(CreateRequest $request, GetWorkoutSessionQuery $query, CreateWorkoutSession $action)
+    public function store(CreateRequest $request, WorkoutSessionQuery $query, CreateWorkoutSession $action)
     {
         $action($request->validated());
         $workoutSession = $query->builder()
@@ -51,13 +51,13 @@ class WorkoutSessionController extends Controller
         return response()->json();
     }
 
-    public function getActiveWorkoutSession(GetWorkoutSessionQuery $query)
+    public function getActiveWorkoutSession(WorkoutSessionQuery $query)
     {
         $workoutSession = $query->builder()
             ->where('status', '=', WorkoutStatus::DRAFT->value)
             ->first();
 
-        if (!$workoutSession) {
+        if (! $workoutSession) {
             return response()->json([
                 'message' => 'No active workout session found',
                 'data' => [],

@@ -4,7 +4,7 @@ namespace App\Queries;
 
 use App\Models\User;
 
-class GetUserQuery
+class UserQuery
 {
     public function __construct() {}
 

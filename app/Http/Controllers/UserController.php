@@ -9,7 +9,7 @@ use App\Http\Requests\User\LoginRequest;
 use App\Http\Requests\User\SettingsRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
-use App\Queries\GetUserQuery;
+use App\Queries\UserQuery;
 use Illuminate\Http\JsonResponse;
 
 class UserController extends Controller
@@ -51,7 +51,7 @@ class UserController extends Controller
         return UserResource::make($user->refresh());
     }
 
-    public function show(GetUserQuery $query): UserResource
+    public function show(UserQuery $query): UserResource
     {
         return UserResource::make(auth()->user());
     }
