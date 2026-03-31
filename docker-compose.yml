@@ -1,0 +1,17 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    entrypoint: ["php", "artisan", "octane:frankenphp", "--host=0.0.0.0", "--port=8000", "--workers=1", "--max-requests=500"]
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+      - vendor:/app/vendor
+    env_file:
+      - .env
+    restart: unless-stopped
+
+volumes:
+  vendor:
