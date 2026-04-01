@@ -1,17 +1,14 @@
 services:
   app:
-    build:
-      context: .
-      dockerfile: docker/php/Dockerfile
-    entrypoint: ["php", "artisan", "octane:frankenphp", "--host=0.0.0.0", "--port=8000", "--workers=1", "--max-requests=500"]
+    image: serversideup/php:8.5-frankenphp
     ports:
-      - "8000:8000"
+      - "80:8005"
     volumes:
-      - .:/app
-      - vendor:/app/vendor
+      - .:/var/www/html
+    command: [ "php", "artisan", "octane:start", "--server=frankenphp", "--port=8005" ]
     env_file:
       - .env
+    healthcheck:
+      test: [ "CMD", "healthcheck-octane" ]
+      start_period: 10s
     restart: unless-stopped
-
-volumes:
-  vendor:

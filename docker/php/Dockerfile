@@ -1,26 +1,19 @@
-FROM dunglas/frankenphp
+FROM serversideup/php:8.5-frankenphp
 
-WORKDIR /app
+USER root
 
-RUN install-php-extensions zip intl gd pcntl pdo_mysql pdo_pgsql pgsql
+RUN install-php-extensions zip intl gd bcmath pcntl pdo_mysql pdo_pgsql pgsql
 
+COPY docker/php/docker-entrypoint.sh /usr/local/bin
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+USER www-data
+
+COPY --chown=www-data:www-data . /var/www/html
 COPY --from=composer/composer:latest-bin /composer /usr/bin/composer
 
-# Copy dependency manifests first for better layer caching
-COPY composer.json composer.lock ./
-
-# Install production dependencies
 RUN composer install --no-dev --optimize-autoloader --no-scripts --no-interaction
-
-# Copy remaining application files
-COPY . .
-
-# Run post-install composer scripts
 RUN composer run-script post-autoload-dump --no-interaction
 
-# Ensure Laravel writable directories exist with correct permissions
-RUN mkdir -p storage/framework/sessions storage/framework/views storage/framework/cache storage/logs bootstrap/cache \
-    && chown -R www-data:www-data storage bootstrap/cache \
-    && chmod -R 775 storage bootstrap/cache
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 
-ENTRYPOINT ["php", "artisan", "octane:frankenphp", "--host=0.0.0.0", "--port=8000"]

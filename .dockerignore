@@ -1,7 +1,8 @@
 .git
 .gitignore
 .env
-.env.*
+.env.local
+.env.*.local
 node_modules
 /public/build
 /public/hot
