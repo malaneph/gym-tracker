@@ -16,25 +16,23 @@ class UserController extends Controller
 {
     public function authUser(AuthRequest $request, CreateUser $action): UserResource|JsonResponse
     {
-        $user_data = $request->validated();
+        $user_data = json_decode($request->validated('webAppData')['user'], true, flags: JSON_THROW_ON_ERROR);
 
-        if (! $user = User::where('username', $user_data['username'])->first()) {
+        if (!$user = User::where('telegram_id', $user_data['id'])->first()) {
             $action($user_data);
-            $user = User::where('username', $user_data['username'])->first();
-
-            return response()->json([
-                'user' => UserResource::make($user),
-                'token' => $user->createToken('auth_token')->plainTextToken,
-            ], 201);
+            $user = User::where('telegram_id', $user_data['id'])->first();
         }
 
-        return UserResource::make($user);
+        return response()->json([
+            'user' => UserResource::make($user),
+            'token' => $user->createToken('auth_token')->plainTextToken,
+        ]);
     }
 
     public function login(LoginRequest $request)
     {
         $credentials = $request->validated();
-        if (! auth()->attempt($credentials)) {
+        if (!auth()->attempt($credentials)) {
             return response()->json(['message' => 'Invalid credentials'], 401);
         }
         $user = auth()->user();

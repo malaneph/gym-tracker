@@ -18,11 +18,20 @@ class AuthMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if ($request->input('initData')) {
-            return ValidateWebAppData::handle($request, $next);
-        }
+        if (!$bearer = $request->bearerToken()) {
+            if ($request->input('initData')) {
+                if ($validated = ValidateWebAppData::handle($request, $next)) {
+                    $user_data = json_decode($validated['webAppData']['user'], true, flags: JSON_THROW_ON_ERROR);
+                    if ($user = User::where('telegram_id', $user_data['id'])->first()) {
+                        Auth::login($user);
 
-        if (! $bearer = $request->bearerToken()) {
+                        return $next($request);
+                    }
+
+                    return $next($request);
+                }
+            }
+
             return response()->json([
                 'success' => false,
                 'error' => 'Authorization required!',
