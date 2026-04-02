@@ -11,7 +11,7 @@ use SergiX44\Nutgram\Nutgram;
 
 Route::controller(UserController::class)->prefix('/auth')->group(function () {
     Route::post('/login', 'login');
-    Route::post('/init', 'authUser');
+    Route::post('/init', 'authUser')->middleware(AuthMiddleware::class);
 });
 
 Route::middleware(AuthMiddleware::class)->controller(UserController::class)->group(function () {
@@ -19,7 +19,7 @@ Route::middleware(AuthMiddleware::class)->controller(UserController::class)->gro
     Route::patch('/user/settings', 'updateUserSettings');
 });
 
-Route::post('/bot/webhook', fn(Nutgram $bot) => $bot->run());
+Route::post('/bot/webhook', fn (Nutgram $bot) => $bot->run());
 
 Route::middleware(AuthMiddleware::class)
     ->controller(ExerciseController::class)

@@ -3,10 +3,6 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 
-set_exception_handler(function ($e) {
-    error_log((string) $e);
-});
-
 define('LARAVEL_START', microtime(true));
 
 // Determine if the application is in maintenance mode...

@@ -18,7 +18,7 @@ class UserController extends Controller
     {
         $user_data = json_decode($request->validated('webAppData')['user'], true, flags: JSON_THROW_ON_ERROR);
 
-        if (!$user = User::where('telegram_id', $user_data['id'])->first()) {
+        if (! $user = User::where('telegram_id', $user_data['id'])->first()) {
             $action($user_data);
             $user = User::where('telegram_id', $user_data['id'])->first();
         }
@@ -32,7 +32,7 @@ class UserController extends Controller
     public function login(LoginRequest $request)
     {
         $credentials = $request->validated();
-        if (!auth()->attempt($credentials)) {
+        if (! auth()->attempt($credentials)) {
             return response()->json(['message' => 'Invalid credentials'], 401);
         }
         $user = auth()->user();
