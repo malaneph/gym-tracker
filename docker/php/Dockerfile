@@ -14,6 +14,8 @@ COPY --from=composer/composer:latest-bin /composer /usr/bin/composer
 
 RUN mkdir -p /var/www/html/storage/logs
 
+RUN chmod 775 /var/www/html/public
+
 RUN composer install --no-dev --optimize-autoloader --no-scripts --no-interaction
 RUN composer run-script post-autoload-dump --no-interaction
 
