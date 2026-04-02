@@ -1,5 +1,5 @@
 services:
-  app:
+  backend:
     build:
       context: .
       dockerfile: docker/php/Dockerfile
@@ -7,3 +7,10 @@ services:
       - "8005:8005"
     command: [ "php", "artisan", "octane:start", "--server=frankenphp", "--port=8005" ]
     restart: unless-stopped
+    networks:
+      - gym-tracker-network
+
+networks:
+  gym-tracker-network:
+    name: gym-tracker-network
+    driver: bridge
