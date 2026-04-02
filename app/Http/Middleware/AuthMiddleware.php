@@ -6,7 +6,7 @@ use App\Models\User;
 use Auth;
 use Closure;
 use DB;
-use Nutgram\Laravel\Middleware\ValidateWebAppData;
+use SergiX44\Nutgram\Nutgram;
 
 class AuthMiddleware
 {
@@ -16,11 +16,14 @@ class AuthMiddleware
      * @param  \Illuminate\Http\Request  $request
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Nutgram $bot, $request, Closure $next)
     {
         if (!$bearer = $request->bearerToken()) {
             if ($request->input('initData')) {
-                return ValidateWebAppData::handle($request, $next);
+                $webappData = $bot->validateWebAppData($request->input('initData'));
+                $request->attributes->add(['webAppData' => $webappData->toArray()]);
+
+                return $next($request);
             }
 
             return response()->json([
