@@ -6,6 +6,7 @@ use App\Models\User;
 use Auth;
 use Closure;
 use DB;
+use Illuminate\Http\Request;
 use SergiX44\Nutgram\Nutgram;
 
 class AuthMiddleware
@@ -13,14 +14,14 @@ class AuthMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @return mixed
      */
-    public function handle(Nutgram $bot, $request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         if (!$bearer = $request->bearerToken()) {
             if ($request->input('initData')) {
-                $webappData = $bot->validateWebAppData($request->input('initData'));
+                $webappData = app(Nutgram::class)->validateWebAppData($request->input('initData'));
                 $request->attributes->add(['webAppData' => $webappData->toArray()]);
 
                 return $next($request);
