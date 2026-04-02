@@ -7,11 +7,12 @@ use App\Http\Controllers\WorkoutSessionController;
 use App\Http\Controllers\WorkoutSetController;
 use App\Http\Middleware\AuthMiddleware;
 use Illuminate\Support\Facades\Route;
+use Nutgram\Laravel\Middleware\ValidateWebAppData;
 use SergiX44\Nutgram\Nutgram;
 
 Route::controller(UserController::class)->prefix('/auth')->group(function () {
     Route::post('/login', 'login');
-    Route::post('/init', 'authUser')->middleware(AuthMiddleware::class);
+    Route::post('/init', 'authUser')->middleware([ValidateWebAppData::class, AuthMiddleware::class]);
 });
 
 Route::middleware(AuthMiddleware::class)->controller(UserController::class)->group(function () {

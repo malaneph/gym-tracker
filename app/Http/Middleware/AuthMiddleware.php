@@ -7,22 +7,23 @@ use Auth;
 use Closure;
 use DB;
 use Illuminate\Http\Request;
-use SergiX44\Nutgram\Nutgram;
 
 class AuthMiddleware
 {
     /**
      * Handle an incoming request.
      *
-     * @param  Request  $request
-     * @return mixed
+     * @throws \JsonException
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): mixed
     {
         if (!$bearer = $request->bearerToken()) {
-            if ($request->input('initData')) {
-                $webappData = app(Nutgram::class)->validateWebAppData($request->input('initData'));
-                $request->attributes->add(['webAppData' => $webappData->toArray()]);
+            if ($webapp_data = $request->webAppData->toArray()) {
+                $user_data = json_decode($webapp_data['user'], true, flags: JSON_THROW_ON_ERROR);
+
+                if ($user = User::where('telegram_id', $user_data['id'])->first()) {
+                    Auth::login($user);
+                }
 
                 return $next($request);
             }
