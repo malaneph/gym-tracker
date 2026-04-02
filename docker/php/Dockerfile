@@ -12,6 +12,8 @@ USER www-data
 COPY --chown=www-data:www-data . /var/www/html
 COPY --from=composer/composer:latest-bin /composer /usr/bin/composer
 
+RUN mkdir -p /var/www/html/storage/logs
+
 RUN composer install --no-dev --optimize-autoloader --no-scripts --no-interaction
 RUN composer run-script post-autoload-dump --no-interaction
 
