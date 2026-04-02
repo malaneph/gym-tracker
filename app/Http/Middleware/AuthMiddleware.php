@@ -20,16 +20,7 @@ class AuthMiddleware
     {
         if (!$bearer = $request->bearerToken()) {
             if ($request->input('initData')) {
-                if ($validated = ValidateWebAppData::handle($request, $next)) {
-                    $user_data = json_decode($validated['webAppData']['user'], true, flags: JSON_THROW_ON_ERROR);
-                    if ($user = User::where('telegram_id', $user_data['id'])->first()) {
-                        Auth::login($user);
-
-                        return $next($request);
-                    }
-
-                    return $next($request);
-                }
+                return ValidateWebAppData::handle($request, $next);
             }
 
             return response()->json([
