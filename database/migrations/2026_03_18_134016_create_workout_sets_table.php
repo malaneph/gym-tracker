@@ -1,19 +1,16 @@
 <?php
 
-use App\Models\WorkoutPlanExercise;
-use App\Models\WorkoutSession;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     public function up(): void
     {
         Schema::create('workout_sets', function (Blueprint $table) {
             $table->uuid('id');
-            $table->foreignIdFor(WorkoutSession::class, 'workout_session');
-            $table->foreignIdFor(WorkoutPlanExercise::class, 'workout_plan_exercise');
+            $table->foreignUuid('workout_session')->constrained('workout_sessions');
+            $table->foreignUuid('workout_plan_exercise')->constrained('workout_plan_exercises');
             $table->integer('set_index');
             $table->integer('reps');
             $table->decimal('weight');
