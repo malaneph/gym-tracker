@@ -6,6 +6,7 @@ use App\Http\Controllers\WorkoutPlanController;
 use App\Http\Controllers\WorkoutSessionController;
 use App\Http\Controllers\WorkoutSetController;
 use App\Http\Middleware\AuthMiddleware;
+use App\Http\Middleware\WebAppDataMiddleware;
 use Illuminate\Support\Facades\Route;
 use Nutgram\Laravel\Middleware\ValidateWebAppData;
 use SergiX44\Nutgram\Nutgram;
@@ -15,7 +16,7 @@ Route::controller(UserController::class)->prefix('/auth')->group(function () {
     Route::post('/init', 'authUser')->middleware([ValidateWebAppData::class, AuthMiddleware::class]);
 });
 
-Route::middleware([ValidateWebAppData::class, AuthMiddleware::class])
+Route::middleware([WebAppDataMiddleware::class, AuthMiddleware::class])
     ->controller(UserController::class)
     ->prefix('/user')
     ->group(function () {
@@ -23,9 +24,9 @@ Route::middleware([ValidateWebAppData::class, AuthMiddleware::class])
         Route::patch('/settings', 'updateUserSettings');
     });
 
-Route::post('/bot/webhook', fn (Nutgram $bot) => $bot->run());
+Route::post('/bot/webhook', fn(Nutgram $bot) => $bot->run());
 
-Route::middleware([ValidateWebAppData::class, AuthMiddleware::class])
+Route::middleware([WebAppDataMiddleware::class, AuthMiddleware::class])
     ->controller(ExerciseController::class)
     ->prefix('/exercises')
     ->group(function () {
@@ -34,7 +35,7 @@ Route::middleware([ValidateWebAppData::class, AuthMiddleware::class])
         Route::post('/', 'store');
     });
 
-Route::middleware([ValidateWebAppData::class, AuthMiddleware::class])
+Route::middleware([WebAppDataMiddleware::class, AuthMiddleware::class])
     ->controller(WorkoutPlanController::class)
     ->prefix('/plans')
     ->group(function () {
@@ -52,7 +53,7 @@ Route::middleware([ValidateWebAppData::class, AuthMiddleware::class])
         });
     });
 
-Route::middleware([ValidateWebAppData::class, AuthMiddleware::class])
+Route::middleware([WebAppDataMiddleware::class, AuthMiddleware::class])
     ->controller(WorkoutSessionController::class)
     ->prefix('/sessions')
     ->group(function () {
