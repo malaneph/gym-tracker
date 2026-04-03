@@ -9,13 +9,13 @@ use Illuminate\Console\Command;
 
 class FetchExercisesCommand extends Command
 {
-    protected $signature = 'fetch:exercises';
+    protected $signature = 'fetch:exercises {batch_size=50}';
 
     protected $description = 'Get exercises from the Google spreadsheet';
 
     public function handle(): void
     {
-        $client = new Client();
+        $client = new Client;
         $client->setApplicationName('Google Sheets API PHP');
         $client->setScopes([Sheets::SPREADSHEETS_READONLY]);
         $client->setAuthConfig(config('services.gsheets.credentials'));
@@ -23,35 +23,32 @@ class FetchExercisesCommand extends Command
 
         $service = new Sheets($client);
 
-        $spreadsheetId = config('services.gsheets.spreadsheet_id');  // ID таблицы (в URL)
-        $range = 'Exercises!B16:E3094';  // Диапазон данных
+        $spreadsheetId = config('services.gsheets.spreadsheet_id');
 
-        $response = $service->spreadsheets->get($spreadsheetId, [
-            'ranges' => $range,
-            'includeGridData' => true
+        $headersResponse = $service->spreadsheets->get($spreadsheetId, [
+            'ranges' => 'Exercises!B16:E16',
+            'includeGridData' => true,
         ]);
-        $values = $response->getSheets()[0]->getData()[0]->getRowData();
+        $headerRow = $headersResponse->getSheets()[0]->getData()[0]->getRowData()[0];
+        $keys = array_map(fn($cell) => $cell->getFormattedValue(), iterator_to_array($headerRow));
 
-        if (empty($values)) {
+        $dataResponse = $service->spreadsheets->get($spreadsheetId, [
+            'ranges' => 'Exercises!B17:E3094',
+            'includeGridData' => true,
+        ]);
+        $rows = $dataResponse->getSheets()[0]->getData()[0]->getRowData();
+
+        if (empty($rows)) {
             echo "Нет данных.\n";
         } else {
-            $result = [];
-            foreach ($values as $i => $row) {
-                $result[$i] = [];
+            foreach ($rows as $row) {
+                $record = [];
+                foreach ($row as $j => $cell) {
+                    $record[$keys[$j]] = $cell->getHyperLink() ?? $cell->getFormattedValue();
+                }
 
-                if ($i === 0) {
-                    $keys = [];
-                    foreach ($row as $cell) {
-                        $keys[] = $cell->getFormattedValue(); // TODO: сделать по другому получение названий столбцов
-                    }
-                } else {
-                    foreach ($row as $j => $cell) {
-                        $result[$i][$keys[$j]] = $cell->getHyperLink() ?? $cell->getFormattedValue();
-                    }
-
-                    if (!Exercise::where('name', $result[$i]['name'])->exists()) {
-                        Exercise::create($result[$i]);
-                    }
+                if (!Exercise::where('name', $record['name'])->exists()) {
+                    Exercise::create($record);
                 }
             }
         }
