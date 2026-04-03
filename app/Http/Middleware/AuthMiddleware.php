@@ -17,8 +17,8 @@ class AuthMiddleware
      */
     public function handle(Request $request, Closure $next): mixed
     {
-        if (!$bearer = $request->bearerToken()) {
-            if ($webapp_data = $request->attributes->get('webapp_data')->toArray()) {
+        if (! $bearer = $request->bearerToken()) {
+            if ($webapp_data = $request->attributes->get('webAppData')->toArray()) {
                 if ($user = User::where('telegram_id', $webapp_data['user']['id'])->first()) {
                     Auth::login($user);
                 }

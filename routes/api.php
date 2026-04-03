@@ -15,14 +15,17 @@ Route::controller(UserController::class)->prefix('/auth')->group(function () {
     Route::post('/init', 'authUser')->middleware([ValidateWebAppData::class, AuthMiddleware::class]);
 });
 
-Route::middleware(AuthMiddleware::class)->controller(UserController::class)->group(function () {
-    Route::get('/', 'show');
-    Route::patch('/user/settings', 'updateUserSettings');
-});
+Route::middleware([ValidateWebAppData::class, AuthMiddleware::class])
+    ->controller(UserController::class)
+    ->prefix('/user')
+    ->group(function () {
+        Route::get('/', 'show');
+        Route::patch('/settings', 'updateUserSettings');
+    });
 
 Route::post('/bot/webhook', fn (Nutgram $bot) => $bot->run());
 
-Route::middleware(AuthMiddleware::class)
+Route::middleware([ValidateWebAppData::class, AuthMiddleware::class])
     ->controller(ExerciseController::class)
     ->prefix('/exercises')
     ->group(function () {
@@ -31,7 +34,7 @@ Route::middleware(AuthMiddleware::class)
         Route::post('/', 'store');
     });
 
-Route::middleware(AuthMiddleware::class)
+Route::middleware([ValidateWebAppData::class, AuthMiddleware::class])
     ->controller(WorkoutPlanController::class)
     ->prefix('/plans')
     ->group(function () {
@@ -49,7 +52,7 @@ Route::middleware(AuthMiddleware::class)
         });
     });
 
-Route::middleware(AuthMiddleware::class)
+Route::middleware([ValidateWebAppData::class, AuthMiddleware::class])
     ->controller(WorkoutSessionController::class)
     ->prefix('/sessions')
     ->group(function () {
