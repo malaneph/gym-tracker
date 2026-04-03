@@ -56,7 +56,7 @@ class WorkoutPlanExercise extends Model
         $personal_best = $sets->sortByDesc('weight')->first();
 
         return [
-            'personal_best' => $personal_best->weight.' x '.$personal_best->reps,
+            'personal_best' => $personal_best ? $personal_best->weight.' x '.$personal_best->reps : '',
         ];
     }
 }
