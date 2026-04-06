@@ -24,7 +24,7 @@ Route::middleware([WebAppDataMiddleware::class, AuthMiddleware::class])
         Route::patch('/settings', 'updateUserSettings');
     });
 
-Route::post('/bot/webhook', fn(Nutgram $bot) => $bot->run());
+Route::post('/bot/webhook', fn (Nutgram $bot) => $bot->run());
 
 Route::middleware([WebAppDataMiddleware::class, AuthMiddleware::class])
     ->controller(ExerciseController::class)
@@ -49,6 +49,7 @@ Route::middleware([WebAppDataMiddleware::class, AuthMiddleware::class])
             Route::delete('/', 'destroy');
             Route::post('/exercises', 'addExercise');
             Route::patch('/exercises/{exercise}', 'updateExercise');
+            Route::delete('/exercises/{exercise}', 'deleteExercise');
             Route::post('/export', 'exportWorkoutPlan');
         });
     });

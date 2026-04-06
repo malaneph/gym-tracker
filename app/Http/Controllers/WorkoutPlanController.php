@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Actions\CreateWorkoutPlan;
 use App\Actions\CreateWorkoutPlanExercise;
 use App\Actions\DeleteWorkoutPlan;
+use App\Actions\DeleteWorkoutPlanExercise;
 use App\Actions\ExportWorkoutPlan;
 use App\Actions\ImportWorkoutPlan;
 use App\Actions\UpdateWorkoutPlan;
@@ -78,6 +79,16 @@ class WorkoutPlanController extends Controller
         $action($exercise, $request->validated());
 
         return WorkoutPlanExerciseResource::make($exercise->refresh());
+    }
+
+    public function deleteExercise(
+        WorkoutPlan $workoutPlan,
+        WorkoutPlanExercise $exercise,
+        DeleteWorkoutPlanExercise $action
+    ) {
+        $action($exercise);
+
+        return response()->json();
     }
 
     public function exportWorkoutPlan(WorkoutPlan $workoutPlan, ExportWorkoutPlan $action)
