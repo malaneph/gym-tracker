@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Actions\CreateExercise;
 use App\Actions\DeleteExercise;
-use App\Data\ExerciseData;
 use App\Http\Requests\Exercise\BaseRequest;
 use App\Http\Requests\Exercise\SearchRequest;
 use App\Http\Resources\ExerciseResource;
@@ -28,13 +27,14 @@ class ExerciseController extends Controller
         return ExerciseResource::collection($exercises);
     }
 
-    public function store(BaseRequest $request, CreateExercise $action)
+    public function store(BaseRequest $request, CreateExercise $action, ExerciseQuery $query)
     {
-        $data = ExerciseData::from($request->validated());
+        $data = $request->validated();
         $action($data);
+        $result = $query->builder()->where('name', $data['name'])->first();
 
         return ExerciseResource::make(
-            Exercise::where('name', $data->name)->first()
+            $result
         );
     }
 
