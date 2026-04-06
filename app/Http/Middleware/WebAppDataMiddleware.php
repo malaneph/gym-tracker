@@ -10,7 +10,11 @@ class WebAppDataMiddleware extends ValidateWebAppData
 {
     public function handle(Request $request, Closure $next): mixed
     {
-        if (!$request->has('initData')) {
+        if (app()->environment('local')) {
+            return $next($request);
+        }
+
+        if (! $request->has('initData')) {
             $auth_data = $request->header('Authorization');
             if (str_starts_with($auth_data, 'tma ')) {
                 $request->merge(['initData' => substr($auth_data, 4)]);
