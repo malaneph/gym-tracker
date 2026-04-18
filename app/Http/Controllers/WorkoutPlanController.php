@@ -16,6 +16,7 @@ use App\Http\Requests\WorkoutPlan\ImportRequest;
 use App\Http\Requests\WorkoutPlan\UpdateExerciseRequest;
 use App\Http\Requests\WorkoutPlan\UpdateRequest;
 use App\Http\Resources\WorkoutPlanExerciseResource;
+use App\Http\Resources\WorkoutPlanExportTokenResource;
 use App\Http\Resources\WorkoutPlanResource;
 use App\Models\WorkoutPlan;
 use App\Models\WorkoutPlanExercise;
@@ -95,7 +96,9 @@ class WorkoutPlanController extends Controller
     {
         $action($workoutPlan);
 
-        return response()->json($workoutPlan->getToken());
+        $result = $workoutPlan->exportTokens()->latest('created_at')->first();
+
+        return WorkoutPlanExportTokenResource::make($result);
     }
 
     public function importWorkoutPlan(ImportRequest $request, ImportWorkoutPlan $action)
@@ -103,6 +106,6 @@ class WorkoutPlanController extends Controller
         $data = $request->validated();
         $action($data);
 
-        return WorkoutPlanResource::make(WorkoutPlan::where('name', $data['name'])->first());
+        return WorkoutPlanResource::make(WorkoutPlan::where('name', $data['name'])->latest()->first());
     }
 }

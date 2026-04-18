@@ -35,7 +35,7 @@ class WorkoutPlan extends Model
 
     public function exercises()
     {
-        return $this->hasMany(WorkoutPlanExercise::class, 'workout_plan');
+        return $this->hasMany(WorkoutPlanExercise::class, 'workout_plan', 'id');
     }
 
     public function exportTokens()

@@ -14,6 +14,6 @@ class WorkoutPlanExportToken extends Model
 
     public function workoutPlan(): BelongsTo
     {
-        return $this->belongsTo(WorkoutPlan::class, 'workout_plan');
+        return $this->belongsTo(WorkoutPlan::class, 'workout_plan', 'id');
     }
 }
