@@ -7,11 +7,14 @@ use DB;
 
 class DeleteWorkoutPlanExercise
 {
-    public function __construct() {}
+    public function __construct()
+    {
+    }
 
     public function __invoke(WorkoutPlanExercise $exercise): void
     {
         DB::transaction(function () use ($exercise) {
+            $exercise->sets->each->delete();
             $exercise->delete();
         });
     }
