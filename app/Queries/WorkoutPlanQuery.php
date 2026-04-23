@@ -2,6 +2,7 @@
 
 namespace App\Queries;
 
+use App\Enums\WorkoutStatus;
 use App\Models\User;
 use App\Models\WorkoutPlan;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
@@ -17,6 +18,8 @@ class WorkoutPlanQuery
 
     public function builder(): EloquentBuilder
     {
-        return WorkoutPlan::query()->where('user', $this->user->id);
+        return WorkoutPlan::query()
+            ->where('user', $this->user->id)
+            ->whereNot('status', WorkoutStatus::DELETED->value);
     }
 }

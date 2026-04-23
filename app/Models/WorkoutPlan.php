@@ -40,7 +40,12 @@ class WorkoutPlan extends Model
 
     public function exportTokens()
     {
-        return $this->hasMany(WorkoutPlanExportToken::class, 'workout_plan');
+        return $this->hasMany(WorkoutPlanExportToken::class, 'workout_plan', 'id');
+    }
+
+    public function sessions()
+    {
+        return $this->hasMany(WorkoutSession::class, 'workout_plan', 'id');
     }
 
     public function createToken(): void

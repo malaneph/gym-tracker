@@ -55,7 +55,7 @@ class WorkoutPlanController extends Controller
 
     public function destroy(WorkoutPlan $workoutPlan, DeleteWorkoutPlan $action)
     {
-        $workoutPlan->delete();
+        $action($workoutPlan);
 
         return response()->json();
     }

@@ -2,6 +2,7 @@
 
 namespace App\Actions;
 
+use App\Enums\WorkoutStatus;
 use App\Models\WorkoutPlan;
 use DB;
 
@@ -12,7 +13,7 @@ class DeleteWorkoutPlan
     public function __invoke(WorkoutPlan $plan): void
     {
         DB::transaction(function () use ($plan) {
-            $plan->delete();
+            $plan->update(['status' => WorkoutStatus::DELETED->value]);
         });
     }
 }
