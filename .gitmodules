@@ -1,0 +1,3 @@
+[submodule "gymbot-frontend"]
+	path = gymbot-frontend
+	url = git@github.com:malaneph/gymbot-frontend.git
