@@ -13,7 +13,7 @@ class CreateWorkoutPlan
     {
         $attributes['user'] = auth()->id();
 
-        DB::transaction(function () use ($attributes) {
+        DB::transaction(function () use ($attributes): void {
             WorkoutPlan::create($attributes);
         });
     }

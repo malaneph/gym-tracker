@@ -5,7 +5,7 @@ return [
     'token' => env('TELEGRAM_TOKEN'),
 
     // if the webhook mode must validate the incoming IP range is from a telegram server
-    'safe_mode' => env('APP_ENV', 'local') === 'production',
+    'safe_mode' => 'production' === env('APP_ENV', 'local'),
 
     // Extra or specific configurations
     'config' => [],

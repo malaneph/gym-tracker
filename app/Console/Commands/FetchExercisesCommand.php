@@ -15,7 +15,7 @@ class FetchExercisesCommand extends Command
 
     public function handle(): void
     {
-        $client = new Client;
+        $client = new Client();
         $client->setApplicationName('Google Sheets API PHP');
         $client->setScopes([Sheets::SPREADSHEETS_READONLY]);
         $client->setAuthConfig(config('services.gsheets.credentials'));
@@ -47,7 +47,7 @@ class FetchExercisesCommand extends Command
                     $record[$keys[$j]] = $cell->getHyperLink() ?? $cell->getFormattedValue();
                 }
 
-                if (!Exercise::where('name', $record['name'])->exists()) {
+                if ( ! Exercise::where('name', $record['name'])->exists()) {
                     Exercise::create($record);
                 }
             }

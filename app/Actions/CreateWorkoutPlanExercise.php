@@ -14,7 +14,7 @@ class CreateWorkoutPlanExercise
 
     public function __invoke(WorkoutPlan $workoutPlan, array $attributes): void
     {
-        DB::transaction(function () use ($workoutPlan, $attributes) {
+        DB::transaction(function () use ($workoutPlan, $attributes): void {
             $count = $workoutPlan->exercises()->count();
 
             if (isset($attributes['exercise_name'])) {

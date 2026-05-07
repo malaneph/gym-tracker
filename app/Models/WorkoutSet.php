@@ -31,16 +31,9 @@ class WorkoutSet extends Model
         return $this->belongsTo(WorkoutPlanExercise::class, 'workout_plan_exercise');
     }
 
-    protected function casts(): array
-    {
-        return [
-            'id' => 'string',
-        ];
-    }
-
     public function previousSet(): ?array
     {
-        $previous_set = (new WorkoutSetQuery)
+        $previous_set = (new WorkoutSetQuery())
             ->builder()
             ->where('workout_plan_exercise', $this->workoutPlanExercise->id)
             ->orderByDesc('created_at')
@@ -48,10 +41,17 @@ class WorkoutSet extends Model
 
         if ($previous_set) {
             return [
-                'previous_set' => $previous_set->weight.' x '.$previous_set->reps,
+                'previous_set' => $previous_set->weight . ' x ' . $previous_set->reps,
             ];
         }
 
         return null;
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'id' => 'string',
+        ];
     }
 }

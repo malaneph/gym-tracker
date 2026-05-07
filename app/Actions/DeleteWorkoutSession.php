@@ -11,7 +11,7 @@ class DeleteWorkoutSession
 
     public function __invoke(WorkoutSession $workout_session): void
     {
-        DB::transaction(function () use ($workout_session) {
+        DB::transaction(function () use ($workout_session): void {
             $workout_session->delete();
         });
     }

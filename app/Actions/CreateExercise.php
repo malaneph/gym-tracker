@@ -11,7 +11,7 @@ class CreateExercise
 
     public function __invoke(array $attributes): void
     {
-        DB::transaction(function () use ($attributes) {
+        DB::transaction(function () use ($attributes): void {
             Exercise::create($attributes);
         });
     }

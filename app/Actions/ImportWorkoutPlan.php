@@ -9,12 +9,12 @@ class ImportWorkoutPlan
 {
     public function __construct() {}
 
-    public function __invoke(array $attributes)
+    public function __invoke(array $attributes): void
     {
         $workout_plan = WorkoutPlanExportToken::where('token', $attributes['token'])->first()?->workoutPlan;
         $workout_plan->load('exercises');
 
-        DB::transaction(function () use ($workout_plan, $attributes) {
+        DB::transaction(function () use ($workout_plan, $attributes): void {
             $imported_plan = $workout_plan->replicate();
             $imported_plan->name = $attributes['name'];
             $imported_plan->user = auth()->id();

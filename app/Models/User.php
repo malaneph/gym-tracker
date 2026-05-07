@@ -12,7 +12,10 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasApiTokens, HasFactory, HasUuids, Notifiable;
+    use HasApiTokens;
+    use HasFactory;
+    use HasUuids;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -37,20 +40,6 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'id' => 'string',
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
-
     public function settings()
     {
         return $this->hasOne(UserSettings::class, 'user');
@@ -64,5 +53,19 @@ class User extends Authenticatable
     public function workoutSessions()
     {
         return $this->hasMany(WorkoutSession::class, 'user');
+    }
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'id' => 'string',
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
     }
 }

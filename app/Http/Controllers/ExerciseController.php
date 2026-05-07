@@ -34,7 +34,7 @@ class ExerciseController extends Controller
         $result = $query->builder()->where('name', $data['name'])->first();
 
         return ExerciseResource::make(
-            $result
+            $result,
         );
     }
 

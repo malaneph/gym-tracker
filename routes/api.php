@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 use Nutgram\Laravel\Middleware\ValidateWebAppData;
 use SergiX44\Nutgram\Nutgram;
 
-Route::controller(UserController::class)->prefix('/auth')->group(function () {
+Route::controller(UserController::class)->prefix('/auth')->group(function (): void {
     Route::post('/login', 'login');
     Route::post('/init', 'authUser')->middleware([ValidateWebAppData::class, AuthMiddleware::class]);
 });
@@ -19,17 +19,17 @@ Route::controller(UserController::class)->prefix('/auth')->group(function () {
 Route::middleware([WebAppDataMiddleware::class, AuthMiddleware::class])
     ->controller(UserController::class)
     ->prefix('/user')
-    ->group(function () {
+    ->group(function (): void {
         Route::get('/', 'show');
         Route::patch('/settings', 'updateUserSettings');
     });
 
-Route::post('/bot/webhook', fn (Nutgram $bot) => $bot->run());
+Route::post('/bot/webhook', fn(Nutgram $bot) => $bot->run());
 
 Route::middleware([WebAppDataMiddleware::class, AuthMiddleware::class])
     ->controller(ExerciseController::class)
     ->prefix('/exercises')
-    ->group(function () {
+    ->group(function (): void {
         Route::get('/', 'index');
         Route::get('/search', 'search');
         Route::post('/', 'store');
@@ -38,12 +38,12 @@ Route::middleware([WebAppDataMiddleware::class, AuthMiddleware::class])
 Route::middleware([WebAppDataMiddleware::class, AuthMiddleware::class])
     ->controller(WorkoutPlanController::class)
     ->prefix('/plans')
-    ->group(function () {
+    ->group(function (): void {
         Route::get('/', 'index');
         Route::post('/', 'store');
         Route::post('/import', 'importWorkoutPlan');
 
-        Route::prefix('/{workoutPlan}')->group(function () {
+        Route::prefix('/{workoutPlan}')->group(function (): void {
             Route::get('/', 'show');
             Route::patch('/', 'update');
             Route::delete('/', 'destroy');
@@ -57,20 +57,20 @@ Route::middleware([WebAppDataMiddleware::class, AuthMiddleware::class])
 Route::middleware([WebAppDataMiddleware::class, AuthMiddleware::class])
     ->controller(WorkoutSessionController::class)
     ->prefix('/sessions')
-    ->group(function () {
+    ->group(function (): void {
         Route::get('/', 'index')->name('sessions.index');
         Route::post('/', 'store')->name('sessions.store');
         Route::get('/active', 'getActiveWorkoutSession')->name('sessions.active');
 
-        Route::prefix('/{workoutSession}')->group(function () {
+        Route::prefix('/{workoutSession}')->group(function (): void {
             Route::get('/', 'show')->name('sessions.show');
             Route::patch('/', 'update')->name('sessions.update');
             Route::delete('/', 'destroy')->name('sessions.delete');
             Route::post('/finish', 'finishWorkoutSession')->name('sessions.finish');
 
-            Route::controller(WorkoutSetController::class)->prefix('/sets')->group(function () {
+            Route::controller(WorkoutSetController::class)->prefix('/sets')->group(function (): void {
                 Route::post('/', 'store');
-                Route::prefix('/{workoutSet}')->group(function () {
+                Route::prefix('/{workoutSet}')->group(function (): void {
                     Route::post('/', 'show')->name('sets.show');
                     Route::patch('/', 'update')->name('sets.update');
                     Route::delete('/', 'destroy')->name('sets.delete');

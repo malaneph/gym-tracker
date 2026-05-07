@@ -63,7 +63,7 @@ class WorkoutPlanController extends Controller
     public function addExercise(
         AddExerciseRequest $request,
         WorkoutPlan $workoutPlan,
-        CreateWorkoutPlanExercise $action
+        CreateWorkoutPlanExercise $action,
     ) {
         $data = $request->validated();
         $action($workoutPlan, $data);
@@ -75,7 +75,7 @@ class WorkoutPlanController extends Controller
         UpdateExerciseRequest $request,
         WorkoutPlan $workoutPlan,
         WorkoutPlanExercise $exercise,
-        UpdateWorkoutPlanExercise $action
+        UpdateWorkoutPlanExercise $action,
     ) {
         $action($exercise, $request->validated());
 
@@ -85,7 +85,7 @@ class WorkoutPlanController extends Controller
     public function deleteExercise(
         WorkoutPlan $workoutPlan,
         WorkoutPlanExercise $exercise,
-        DeleteWorkoutPlanExercise $action
+        DeleteWorkoutPlanExercise $action,
     ) {
         $action($exercise);
 

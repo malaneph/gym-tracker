@@ -21,7 +21,7 @@ class CreateWorkoutSession
 
             $attributes['started_at'] = now();
 
-            if (!$active_session) {
+            if ( ! $active_session) {
                 WorkoutSession::create($attributes);
             }
         });

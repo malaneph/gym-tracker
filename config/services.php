@@ -35,7 +35,7 @@ return [
         ],
     ],
     'gsheets' => [
-        'credentials' => env('GOOGLE_CREDENTIALS', __DIR__.'/../credentials.json'),
+        'credentials' => env('GOOGLE_CREDENTIALS', __DIR__ . '/../credentials.json'),
         'spreadsheet_id' => env('GOOGLE_SPREADSHEET'),
     ],
 ];

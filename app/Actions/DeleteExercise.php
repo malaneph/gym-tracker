@@ -11,7 +11,7 @@ class DeleteExercise
 
     public function __invoke(Exercise $exercise): void
     {
-        DB::transaction(function () use ($exercise) {
+        DB::transaction(function () use ($exercise): void {
             $exercise->delete();
         });
     }

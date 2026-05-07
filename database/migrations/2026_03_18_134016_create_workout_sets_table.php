@@ -4,10 +4,10 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class () extends Migration {
     public function up(): void
     {
-        Schema::create('workout_sets', function (Blueprint $table) {
+        Schema::create('workout_sets', function (Blueprint $table): void {
             $table->uuid('id');
             $table->foreignUuid('workout_session')->constrained('workout_sessions');
             $table->foreignUuid('workout_plan_exercise')->constrained('workout_plan_exercises');

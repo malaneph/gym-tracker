@@ -16,7 +16,7 @@ class UpdateWorkoutSession
             $attributes['finished_at'] = now();
         }
 
-        DB::transaction(function () use ($workoutSession, $attributes) {
+        DB::transaction(function () use ($workoutSession, $attributes): void {
             $workoutSession->update($attributes);
         });
     }

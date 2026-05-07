@@ -12,8 +12,8 @@ class UpdateUserSettings
 
     public function __invoke(User $user, array $attributes): void
     {
-        DB::transaction(function () use ($user, $attributes) {
-            if (! isset($user->settings)) {
+        DB::transaction(function () use ($user, $attributes): void {
+            if ( ! isset($user->settings)) {
                 UserSettings::create([
                     'user' => $user->id,
                     'language' => $attributes['language'] ?? config('app.locale'),

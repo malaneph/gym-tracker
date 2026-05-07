@@ -14,10 +14,10 @@ class WebAppDataMiddleware extends ValidateWebAppData
             return $next($request);
         }
 
-        if (! $request->has('initData')) {
+        if ( ! $request->has('initData')) {
             $auth_data = $request->header('Authorization');
             if (str_starts_with($auth_data, 'tma ')) {
-                $request->merge(['initData' => substr($auth_data, 4)]);
+                $request->merge(['initData' => mb_substr($auth_data, 4)]);
             }
         }
 

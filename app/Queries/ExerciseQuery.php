@@ -20,6 +20,6 @@ class ExerciseQuery
 
     public function search(string $search): EloquentBuilder
     {
-        return $this->builder()->where(DB::raw('LOWER(name)'), 'like', '%'.strtolower($search).'%');
+        return $this->builder()->where(DB::raw('LOWER(name)'), 'like', '%' . mb_strtolower($search) . '%');
     }
 }

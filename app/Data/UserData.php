@@ -11,7 +11,6 @@ class UserData extends Data
         public string $username,
         public ?int $telegram_id,
         public ?string $avatar,
-        public ?int $auth_date
-    ) {
-    }
+        public ?int $auth_date,
+    ) {}
 }

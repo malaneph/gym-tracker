@@ -57,7 +57,7 @@ class WorkoutSessionController extends Controller
             ->where('status', '=', WorkoutStatus::DRAFT->value)
             ->first();
 
-        if (! $workoutSession) {
+        if ( ! $workoutSession) {
             return response()->json([
                 'message' => 'No active workout session found',
                 'data' => [],

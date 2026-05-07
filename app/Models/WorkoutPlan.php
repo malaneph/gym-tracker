@@ -24,15 +24,6 @@ class WorkoutPlan extends Model
         return $this->belongsTo(User::class, 'user', 'id');
     }
 
-    protected function casts(): array
-    {
-        return [
-            'id' => 'string',
-            'is_default' => 'integer',
-            'status' => 'integer',
-        ];
-    }
-
     public function exercises()
     {
         return $this->hasMany(WorkoutPlanExercise::class, 'workout_plan', 'id');
@@ -50,14 +41,24 @@ class WorkoutPlan extends Model
 
     public function createToken(): void
     {
-        $this->exportTokens()->create([
-            'token' => (string) Str::uuid(),
-        ]
+        $this->exportTokens()->create(
+            [
+                'token' => (string) Str::uuid(),
+            ],
         );
     }
 
     public function getToken(): array
     {
         return $this->exportTokens()->latest()->first('token')->toArray();
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'id' => 'string',
+            'is_default' => 'integer',
+            'status' => 'integer',
+        ];
     }
 }

@@ -12,7 +12,7 @@ class DeleteWorkoutPlan
 
     public function __invoke(WorkoutPlan $plan): void
     {
-        DB::transaction(function () use ($plan) {
+        DB::transaction(function () use ($plan): void {
             $plan->update(['status' => WorkoutStatus::DELETED->value]);
         });
     }

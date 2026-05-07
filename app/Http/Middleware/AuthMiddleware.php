@@ -7,17 +7,18 @@ use Auth;
 use Closure;
 use DB;
 use Illuminate\Http\Request;
+use JsonException;
 
 class AuthMiddleware
 {
     /**
      * Handle an incoming request.
      *
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function handle(Request $request, Closure $next): mixed
     {
-        if (! $bearer = $request->bearerToken()) {
+        if ( ! $bearer = $request->bearerToken()) {
             if ($webapp_data = $request->attributes->get('webAppData')->toArray()) {
                 if ($user = User::where('telegram_id', $webapp_data['user']['id'])->first()) {
                     Auth::login($user);

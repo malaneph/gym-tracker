@@ -11,7 +11,7 @@ class UpdateWorkoutPlan
 
     public function __invoke(WorkoutPlan $plan, array $attributes): void
     {
-        DB::transaction(function () use ($plan, $attributes) {
+        DB::transaction(function () use ($plan, $attributes): void {
             $plan->update($attributes);
         });
     }

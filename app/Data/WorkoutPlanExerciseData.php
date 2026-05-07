@@ -14,6 +14,6 @@ class WorkoutPlanExerciseData extends Data
         public int $is_optional,
         public string $notes,
         public int $rest_seconds,
-        public ?ExerciseData $exercise_variation
+        public ?ExerciseData $exercise_variation,
     ) {}
 }
