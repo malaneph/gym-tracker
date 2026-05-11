@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BodyweightLogController;
 use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkoutPlanController;
@@ -76,5 +77,19 @@ Route::middleware([WebAppDataMiddleware::class, AuthMiddleware::class])
                     Route::delete('/', 'destroy')->name('sets.delete');
                 });
             });
+        });
+    });
+
+Route::middleware([WebAppDataMiddleware::class, AuthMiddleware::class])
+    ->controller(BodyweightLogController::class)
+    ->prefix('/bodyweight-logs')
+    ->group(function (): void {
+        Route::get('/', 'index');
+        Route::post('/', 'store');
+
+        Route::prefix('/{bodyweightLog}')->group(function (): void {
+            Route::get('/', 'show');
+            Route::patch('/', 'update');
+            Route::delete('/', 'destroy');
         });
     });
