@@ -7,6 +7,34 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 
+/**
+ * @property string $id
+ * @property \App\Models\User $user
+ * @property string $name
+ * @property string $category
+ * @property int $is_default
+ * @property int $status
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\WorkoutPlanExercise> $exercises
+ * @property-read int|null $exercises_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\WorkoutPlanExportToken> $exportTokens
+ * @property-read int|null $export_tokens_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\WorkoutSession> $sessions
+ * @property-read int|null $sessions_count
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutPlan newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutPlan newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutPlan query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutPlan whereCategory($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutPlan whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutPlan whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutPlan whereIsDefault($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutPlan whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutPlan whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutPlan whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkoutPlan whereUser($value)
+ * @mixin \Eloquent
+ */
 class WorkoutPlan extends Model
 {
     use HasUuids;
