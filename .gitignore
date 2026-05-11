@@ -23,6 +23,7 @@ Homestead.json
 Homestead.yaml
 Thumbs.db
 credentials.json
+_ide_helper.php
 
 **/caddy
 frankenphp
